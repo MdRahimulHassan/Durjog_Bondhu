@@ -1,0 +1,32 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services' // Ensure this line is included at the end of plugins
+}
+
+android {
+    namespace 'com.example.flood_rescue_app' // Your app's namespace
+    compileSdkVersion 33 // or the latest version
+
+    defaultConfig {
+        applicationId "com.example.flood_rescue_app" // Your package name
+        minSdkVersion 21 // or your minimum supported SDK version
+        targetSdkVersion 33 // or the latest version
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:33.10.0') // Check for the latest version
+    implementation 'com.google.firebase:firebase-analytics' // Add Firebase Analytics
+    implementation 'com.google.firebase:firebase-auth' // Add Firebase Auth
+    implementation 'com.google.android.gms:play-services-auth:21.3.0' // Google Sign-In SDK
+}
