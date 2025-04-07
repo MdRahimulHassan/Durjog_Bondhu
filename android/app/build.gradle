@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:33.10.0') // Check for the latest version
+    implementation platform('com.google.firebase:firebase-bom:33.10.0') // Use the Firebase BOM for version management
     implementation 'com.google.firebase:firebase-analytics' // Add Firebase Analytics
     implementation 'com.google.firebase:firebase-auth' // Add Firebase Auth
     implementation 'com.google.android.gms:play-services-auth:21.3.0' // Google Sign-In SDK

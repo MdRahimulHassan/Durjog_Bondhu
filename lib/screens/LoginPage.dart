@@ -42,60 +42,111 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Log In')),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: _isObscured,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  suffixIcon: IconButton(
-                    icon: Icon(_isObscured ? Icons.visibility_off : Icons.visibility),
-                    onPressed: () {
-                      setState(() {
-                        _isObscured = !_isObscured;
-                      });
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 50.0), // Add padding
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Image at the top
+                  Image.asset(
+                    "assets/images/login.png", // Replace with your image path
+                    height: 150,
+                  ),
+                  const SizedBox(height: 30), // Spacing after image
+
+                  // Email Field with Box Style
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200], // Light background
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
                     },
                   ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20), // Add spacing
-              ElevatedButton(
-                onPressed: _login, // Call the login function
-                child: const Text("LOGIN"),
-              ),
-              Row(
-                children: [
-                  const Text("Don't have an account?"),
-                  TextButton(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SignupPage()),
+                  const SizedBox(height: 20), // Spacing
+
+                  // Password Field with Box Style
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: _isObscured,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(_isObscured ? Icons.visibility_off : Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            _isObscured = !_isObscured;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200], // Light background
                     ),
-                    child: const Text("Sign Up"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30), // Spacing
+
+                  // Login Button with Padding
+                  SizedBox(
+                    width: double.infinity, // Full-width button
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue, // Change button color
+                        foregroundColor: Colors.white, // Text color
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // Rounded button
+                        ),
+                      ),
+                      onPressed: _login,
+                      child: const Text(
+                        "LOGIN",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 15), // Spacing
+
+                  // Sign Up Row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account?"),
+                      TextButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const SignupPage()),
+                        ),
+                        child: const Text("Sign Up"),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

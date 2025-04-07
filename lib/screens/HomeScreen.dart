@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'EmergencyContactsScreen.dart';
 import 'profile.dart';
 import 'RescueRequestScreen.dart';
-import 'emergency_contacts_screen.dart';
 import 'FloodAlertsScreen.dart';
 import 'LoginPage.dart';
 import 'ShelterLocationsScreen.dart';
@@ -18,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flood Rescue App', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
-        automaticallyImplyLeading: true, // Ensures the hamburger icon appears
+        automaticallyImplyLeading: true,
       ),
 
       // Navigation Drawer
@@ -28,16 +30,13 @@ class HomeScreen extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               decoration: const BoxDecoration(
-                color: Colors.blue, // Background color of drawer header
+                color: Colors.blue,
               ),
               currentAccountPicture: const CircleAvatar(
-                backgroundImage: AssetImage("assets/images/Rahimul.png"), // Profile image
+                backgroundImage: AssetImage("assets/images/Rahimul.png"),
                 radius: 40,
               ),
-              accountName: const Text(
-                "Rahimul",
-                style: TextStyle(fontSize: 18),
-              ),
+              accountName: const Text("Rahimul", style: TextStyle(fontSize: 18)),
               accountEmail: const Text("2021831050@student.sust.edu"),
             ),
             _buildDrawerItem(Icons.home, "Home", context),
@@ -47,10 +46,24 @@ class HomeScreen extends StatelessWidget {
             const Divider(),
             _buildDrawerItem(Icons.extension, "Plugins", context),
             _buildDrawerItem(Icons.notifications, "Notifications", context),
+
+            // 🔒 Logout Item
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.black54),
+              title: const Text("Logout", style: TextStyle(fontSize: 16)),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
+            ),
           ],
         ),
       ),
 
+      // Body Grid View
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.count(
@@ -100,6 +113,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  // Drawer Item Builder
   Widget _buildDrawerItem(IconData icon, String title, BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: Colors.black54),
@@ -111,7 +125,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// ✅ Added missing FeatureCard widget
+// ✅ FeatureCard Widget
 class FeatureCard extends StatelessWidget {
   final IconData icon;
   final String label;

@@ -12,9 +12,11 @@ class WelcomePage extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          /*image: DecorationImage(
-            alignment: Alignment.center, image: assets/images/chat.png ,
-          ),*/
+          image: DecorationImage(
+            alignment: Alignment.center,
+            image: AssetImage("assets/images/WelcomeScreenBg.jpg"), // Fixed
+            fit: BoxFit.fill, // Ensures image covers the screen
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -25,11 +27,16 @@ class WelcomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: Colors.white70,
               ),
             ),
             const Text(
               "FLOOD RESCUE APP",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.redAccent,
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -38,6 +45,10 @@ class WelcomePage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const LoginPage()),
               ),
               child: const Text("LOGIN"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // Change this to your desired color
+                foregroundColor: Colors.white, // Text color,
+            ),
             ),
             const SizedBox(height: 15),
             ElevatedButton(
@@ -46,6 +57,10 @@ class WelcomePage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const SignupPage()),
               ),
               child: const Text("SIGNUP"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // Change this to your desired color
+                foregroundColor: Colors.white, // Text color,
+              ),
             ),
           ],
         ),

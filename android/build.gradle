@@ -1,29 +1,11 @@
 buildscript {
+    ext.kotlin_version = '1.8.0' // Use the latest stable version of Kotlin compatible with AGP
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.1' // or your specific version
-        classpath 'com.google.gms:google-services:4.3.14' // Check for the latest version
+        classpath 'com.android.tools.build:gradle:7.4.2' // Use AGP 7.4.2
+        classpath 'com.google.gms:google-services:4.3.14' // Use the latest version
     }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-rootProject.buildDir = "../build"
-subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(":app")
-}
-
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
 }
