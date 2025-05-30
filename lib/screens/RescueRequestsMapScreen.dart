@@ -4,14 +4,14 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class RescueRequestScreen extends StatefulWidget {
-  const RescueRequestScreen({super.key});
+class RescueRequestsMapScreen extends StatefulWidget {
+  const RescueRequestsMapScreen({super.key});
 
   @override
-  State<RescueRequestScreen> createState() => _RescueRequestScreenState();
+  State<RescueRequestsMapScreen> createState() => _RescueRequestScreenState();
 }
 
-class _RescueRequestScreenState extends State<RescueRequestScreen> {
+class _RescueRequestScreenState extends State<RescueRequestsMapScreen> {
   LatLng? _userLocation;
 
   @override

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'EmergencyMedicalScreen.dart';
+import 'MapAndRescueTrackerScreen.dart';
+import 'WeatherForecastScreen.dart';
 
+import 'AffectedZonesScreen.dart';
 import 'EmergencyContactsScreen.dart';
 import 'profile.dart';
 import 'RescueRequestScreen.dart';
@@ -72,22 +76,26 @@ class HomeScreen extends StatelessWidget {
           mainAxisSpacing: 16,
           children: [
             FeatureCard(
-              icon: Icons.sos,
-              label: 'Rescue Request',
-              color: Colors.red,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RescueRequestScreen()),
-              ),
+              icon: Icons.emergency,
+              label: 'Emergency SOS',
+              color: Colors.redAccent,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RescueRequestScreen()),
+                );
+              },
             ),
             FeatureCard(
-              icon: Icons.house,
-              label: 'Shelter Locations',
-              color: Colors.blue,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ShelterLocationsScreen()),
-              ),
+              icon: Icons.map_outlined,
+              label: 'Map & Rescue Tracker',
+              color: Colors.orangeAccent,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MapAndRescueTrackerScreen()),
+                );
+              },
             ),
             FeatureCard(
               icon: Icons.contacts,
@@ -99,14 +107,27 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             FeatureCard(
-              icon: Icons.map,
-              label: 'Flood Alerts',
-              color: Colors.purple,
+              icon: Icons.medical_services,
+              label: 'Emergency Medical Info',
+              color: Colors.teal,
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const FloodAlertsScreen()),
+                MaterialPageRoute(builder: (context) => const EmergencyMedicalScreen()),
               ),
             ),
+            FeatureCard(
+              icon: Icons.wifi_off,
+              label: 'Offline Communication',
+              color: Colors.brown,
+              onTap: () {
+                // Add screen later
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Feature coming soon!')),
+                );
+              },
+            ),
+
+
           ],
         ),
       ),
