@@ -16,7 +16,7 @@ class MapAndRescueTrackerScreen extends StatelessWidget {
       {
         'icon': Icons.fireplace,
         'label': 'Live Rescue Heatmap',
-        'screen': const LiveRescueHeatmapScreen()
+        'screen':  LiveRescueHeatmapScreen()
       },
       {
         'icon': Icons.warning,
@@ -34,16 +34,6 @@ class MapAndRescueTrackerScreen extends StatelessWidget {
         'screen': const NearbyHospitalsScreen()
       },
       {
-        'icon': Icons.navigation,
-        'label': 'User’s Safe Route',
-        'screen': const UserSafeRouteScreen()
-      },
-      {
-        'icon': Icons.pin_drop,
-        'label': 'Rescue Requests Map',
-        'screen': const RescueRequestsMapScreen()
-      },
-      {
         'icon': Icons.cloud,
         'label': 'Weather Forecast',
         'screen': const WeatherForecastScreen()
@@ -56,7 +46,7 @@ class MapAndRescueTrackerScreen extends StatelessWidget {
         backgroundColor: Colors.orangeAccent,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(35.0),
         child: GridView.count(
           crossAxisCount: 2,
           crossAxisSpacing: 16,

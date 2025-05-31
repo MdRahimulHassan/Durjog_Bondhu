@@ -11,7 +11,7 @@ import 'RescueRequestScreen.dart';
 import 'FloodAlertsScreen.dart';
 import 'LoginPage.dart';
 import 'ShelterLocationsScreen.dart';
-
+import 'OfflineCommunicationScreen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -22,9 +22,10 @@ class HomeScreen extends StatelessWidget {
 
       // AppBar with hamburger menu
       appBar: AppBar(
-        title: const Text('Flood Rescue App', style: TextStyle(color: Colors.white)),
+        title: const Text('Durjog Bondhu', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
         automaticallyImplyLeading: true,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
 
       // Navigation Drawer
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
 
       // Body Grid View
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(35.0),
         child: GridView.count(
           crossAxisCount: 2,
           crossAxisSpacing: 16,
@@ -97,6 +98,7 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
+
             FeatureCard(
               icon: Icons.contacts,
               label: 'Emergency Contacts',
@@ -120,9 +122,11 @@ class HomeScreen extends StatelessWidget {
               label: 'Offline Communication',
               color: Colors.brown,
               onTap: () {
-                // Add screen later
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Feature coming soon!')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OfflineCommunicationScreen(),
+                  ),
                 );
               },
             ),

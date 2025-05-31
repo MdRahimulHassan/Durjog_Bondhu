@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class FloodAlertZonesScreen extends StatelessWidget {
+class FloodAlertZonesScreen extends StatefulWidget {
   const FloodAlertZonesScreen({super.key});
+
+  @override
+  _FloodAlertZonesScreenState createState() => _FloodAlertZonesScreenState();
+}
+
+class _FloodAlertZonesScreenState extends State<FloodAlertZonesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _launchFloodAlertWebsite();
+  }
+
+  void _launchFloodAlertWebsite() async {
+    final Uri url = Uri.parse('https://www.ffwc.gov.bd/app/home');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+      // Optionally close the screen after launching URL:
+      // Navigator.of(context).pop();
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,14 +33,8 @@ class FloodAlertZonesScreen extends StatelessWidget {
         title: const Text("Flood Alert Zones"),
         backgroundColor: Colors.deepPurple,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Image.asset(
-            'assets/images/flood_alert_zone.png',
-            fit: BoxFit.cover,
-          ),
-        ),
+      body: const Center(
+        child: Text("Opening flood alert website..."),
       ),
     );
   }

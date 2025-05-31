@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// Import your FirstAidTips screen here
+import 'FirstAidTips.dart';  // Adjust the path according to your project structure
+
 class EmergencyMedicalScreen extends StatelessWidget {
   const EmergencyMedicalScreen({super.key});
 
@@ -17,7 +20,7 @@ class EmergencyMedicalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> options = [
-      {'icon': Icons.healing, 'title': 'First Aid Tips'},
+      {'icon': Icons.healing, 'title': 'First Aid Tips', 'route': FirstAidTips()},
       {'icon': Icons.monitor_heart, 'title': 'Symptoms to Watch'},
       {'icon': Icons.local_hospital, 'title': 'Nearby Hospitals'},
       {'icon': Icons.medication_liquid, 'title': 'Emergency Medications'},
@@ -32,15 +35,23 @@ class EmergencyMedicalScreen extends StatelessWidget {
         backgroundColor: Colors.teal,
       ),
       body: GridView.count(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(35),
         crossAxisCount: 2,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
         children: options.map((option) {
           return GestureDetector(
             onTap: () {
-              if (option['action'] == true) _callEmergencyNumber();
-              // Navigation or logic can be added for other cards
+              if (option['action'] == true) {
+                _callEmergencyNumber();
+              } else if (option.containsKey('route')) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => option['route']),
+                );
+              } else {
+                // Add other navigation or logic for other options here if needed
+              }
             },
             child: Container(
               decoration: BoxDecoration(

@@ -6,11 +6,14 @@ class NearbyHospitalsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Nearby Hospitals")),
-      body: Center(
+      appBar: AppBar(
+        title: const Text('Nearby Hospitals'),
+        backgroundColor: Colors.deepPurple, // Optional: to match the heatmap screen
+      ),
+      body: SizedBox.expand(
         child: Image.asset(
-          'assets/images/nearby_hospitals_map.png', // Replace with your image path
-          fit: BoxFit.contain,
+          'assets/images/hospital.png', // Ensure this image is in pubspec.yaml
+          fit: BoxFit.cover,
         ),
       ),
     );

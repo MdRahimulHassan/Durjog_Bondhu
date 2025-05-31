@@ -10,8 +10,8 @@ class ShelterLocationsScreen extends StatefulWidget {
 }
 
 class _ShelterLocationsScreenState extends State<ShelterLocationsScreen> {
-  final List<Map<String, dynamic>> _shelterLocations = []; // List to store shelters
-  bool _isAddingShelter = false; // Track whether the user is in add mode
+  final List<Map<String, dynamic>> _shelterLocations = [];
+  bool _isAddingShelter = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class _ShelterLocationsScreenState extends State<ShelterLocationsScreen> {
               initialZoom: 13.0,
               onTap: (tapPosition, point) {
                 if (_isAddingShelter) {
-                  _addShelter(point);
+                  _showAddShelterDialog(point);
                 }
               },
             ),
@@ -41,7 +41,7 @@ class _ShelterLocationsScreenState extends State<ShelterLocationsScreen> {
                     width: 40,
                     height: 40,
                     child: GestureDetector(
-                      onTap: () => _showShelterDetails(shelter), // Show details popup
+                      onTap: () => _showShelterDetails(shelter),
                       child: const Icon(Icons.location_pin, color: Colors.green, size: 50),
                     ),
                   );
@@ -49,15 +49,13 @@ class _ShelterLocationsScreenState extends State<ShelterLocationsScreen> {
               ),
             ],
           ),
-
-          // Floating button to enable shelter adding mode
           Positioned(
             bottom: 20,
             right: 20,
             child: FloatingActionButton(
               onPressed: () {
                 setState(() {
-                  _isAddingShelter = true; // Enable add mode
+                  _isAddingShelter = true;
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Tap on the map to add a shelter")),
@@ -72,14 +70,72 @@ class _ShelterLocationsScreenState extends State<ShelterLocationsScreen> {
     );
   }
 
-  void _addShelter(LatLng point) {
+  void _showAddShelterDialog(LatLng point) {
+    final nameController = TextEditingController();
+    final capacityController = TextEditingController();
+    final freeSpaceController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Add Shelter"),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(labelText: "Shelter Name"),
+              ),
+              TextField(
+                controller: capacityController,
+                decoration: const InputDecoration(labelText: "Capacity"),
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                controller: freeSpaceController,
+                decoration: const InputDecoration(labelText: "Free Space"),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() => _isAddingShelter = false);
+            },
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              if (nameController.text.isNotEmpty &&
+                  capacityController.text.isNotEmpty &&
+                  freeSpaceController.text.isNotEmpty) {
+                _addShelter(point, nameController.text, capacityController.text, freeSpaceController.text);
+                Navigator.pop(context);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Please fill in all fields")),
+                );
+              }
+            },
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _addShelter(LatLng point, String name, String capacity, String freeSpace) {
     setState(() {
       _shelterLocations.add({
         'location': point,
-        'name': 'Shelter ${_shelterLocations.length + 1}',
-        'capacity': '50 people', // Example info
+        'name': name,
+        'capacity': capacity,
+        'freeSpace': freeSpace,
       });
-      _isAddingShelter = false; // Disable add mode
+      _isAddingShelter = false;
     });
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Shelter added successfully!")),
@@ -91,11 +147,15 @@ class _ShelterLocationsScreenState extends State<ShelterLocationsScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(shelter['name']),
-        content: Text("Capacity: ${shelter['capacity']}\nLocation: ${shelter['location']}"),
+        content: Text(
+          "Capacity: ${shelter['capacity']}\n"
+              "Free Space: ${shelter['freeSpace']}\n"
+              "Location: ${shelter['location']}",
+        ),
         actions: [
           TextButton(
             onPressed: () {
-              _removeShelter(shelter); // Call remove method
+              _removeShelter(shelter);
               Navigator.pop(context);
             },
             child: const Text("Remove Shelter", style: TextStyle(color: Colors.red)),

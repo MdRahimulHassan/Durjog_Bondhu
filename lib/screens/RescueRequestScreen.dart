@@ -45,20 +45,30 @@ class _RescueRequestScreenState extends State<RescueRequestScreen> {
     }
   }
 
+  void _deleteRescueRequest() {
+    setState(() {
+      _userLocation = null;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Rescue request deleted")),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Request Rescue')),
       body: _userLocation == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: Text("No rescue request active."))
           : FlutterMap(
         options: MapOptions(
           initialCenter: _userLocation!,
-          initialZoom: 15.0,
+          initialZoom: 11.0, // Zoomed out slightly
         ),
         children: [
           TileLayer(
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            urlTemplate:
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             subdomains: ['a', 'b', 'c'],
           ),
           MarkerLayer(
@@ -67,23 +77,22 @@ class _RescueRequestScreenState extends State<RescueRequestScreen> {
                 point: _userLocation!,
                 width: 40,
                 height: 40,
-                child: const Icon(Icons.location_pin, color: Colors.red, size: 50),
+                child: const Icon(Icons.location_pin,
+                    color: Colors.red, size: 50),
               ),
             ],
           ),
         ],
       ),
       floatingActionButton: _userLocation != null
-          ? FloatingActionButton.extended(
-        onPressed: () {
-          // Here you can send rescue request logic
-          print('Rescue request sent from: $_userLocation');
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Rescue request sent")),
-          );
-        },
-        label: const Text("Send Rescue Request"),
-        icon: const Icon(Icons.send),
+          ? SizedBox(
+        height: 45,
+        child: FloatingActionButton.extended(
+          onPressed: _deleteRescueRequest,
+          label: const Text("Delete", style: TextStyle(fontSize: 14)),
+          icon: const Icon(Icons.delete, size: 18),
+          backgroundColor: Colors.redAccent,
+        ),
       )
           : null,
     );
